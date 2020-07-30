@@ -1,0 +1,38 @@
+name: Deploy SAM template
+on:
+  push:
+    branches:
+      - master
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    
+    # AWS
+    - name: Configure AWS Credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
+    
+    - name: SAM Build
+      uses: TractorZoom/sam-cli-action@master
+      with:
+        sam_command: "aws cloudformation package  --s3-bucket cloud-challenge-sam --template-file template.yaml --output-template-file template-generated.yaml"
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
+
+
+    - name: SAM Deploy
+      uses: TractorZoom/sam-cli-action@master
+      with:
+        sam_command: "aws cloudformation deploy --template-file template-generated.yaml --stack-name cloud-challenge-stack --capabilities CAPABILITY_IAM"
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
+
