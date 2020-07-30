@@ -8,7 +8,7 @@ Resources:
     Properties:
       Handler: app.lambda_handler
       Runtime: python3.6
-      CodeUri: home/ordep81/Documents/cloud-challenge/
+      CodeUri: /home/ordep81/Documents/Resume_site/cloud-challenge/
       Description: A starter AWS Lambda function.
       MemorySize: 128
       Timeout: 3

@@ -1,7 +1,7 @@
 
 
 # package cloudformation
-aws cloudformation package  --s3-bucket cloud-challenge-sam --template-file template.yaml --output-template-file template-generated.yaml
+aws cloudformation package --s3-bucket cloud-challenge-sam --template-file template.yaml --output-template-file template-generated.yaml
 # sam package ... 
 #
 # deploy 

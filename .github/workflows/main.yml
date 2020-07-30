@@ -1,38 +1,29 @@
-name: Deploy SAM template
 on:
   push:
     branches:
       - master
+name: Publish SAM to AWS
 jobs:
-  build:
+  deploy:
+    name:  Package
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v1
-    
-    # AWS
-    - name: Configure AWS Credentials
-      uses: aws-actions/configure-aws-credentials@v1
-      with:
-        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
-    
-    - name: SAM Build
-      uses: TractorZoom/sam-cli-action@master
-      with:
-        sam_command: "package --s3-bucket cloud-challenge-sam --template-file template.yaml --output-template-file template-generated.yaml"
+    - uses: actions/checkout@master
+    - name: Package
+      uses: chriscoffee/sam-github-actions@master
       env:
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
-
-
-    - name: SAM Deploy
-      uses: TractorZoom/sam-cli-action@master
+        S3_BUCKET: ${{ secrets.S3_BUCKET }}
       with:
-        sam_command: "deploy --template-file template-generated.yaml --stack-name cloud-challenge-stack --capabilities CAPABILITY_IAM"
+        args: package --template-file template.yaml --s3-bucket ${{ secrets.S3_BUCKET }} --output-template-file packaged.yaml
+    - name: Deploy
+      uses: chriscoffee/sam-github-actions@master
       env:
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
-
+        STACK_NAME: ${{ secrets.STACK_NAME }}
+      with:
+        args: deploy --template-file packaged.yaml --stack-name ${{ secrets.STACK_NAME }} --capabilities CAPABILITY_IAM
