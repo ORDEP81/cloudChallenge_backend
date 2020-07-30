@@ -20,7 +20,7 @@ jobs:
     - name: SAM Build
       uses: TractorZoom/sam-cli-action@master
       with:
-        sam_command: "package --s3-bucket cloud-challenge-sam --template-file template.yaml --output-template-file template-generated.yaml"
+        sam_command: "build"
       env:
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
