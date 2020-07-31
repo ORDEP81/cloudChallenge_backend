@@ -10,7 +10,7 @@ def aws_setup():
   os.environ['AWS_SECRET_ACCESS_KEY'] = 'testing'
   os.environ['AWS_SECURITY_TOKEN'] = 'testing'
   os.environ['AWS_SESSION_TOKEN'] = 'testing'
-  os.environ['AWS_REGION_NAME'] = 'testing'
+  #os.environ['AWS_REGION_NAME'] = 'testing'
 
   # Database table name into env variable
   os.environ['databaseName'] = 'testing' 
