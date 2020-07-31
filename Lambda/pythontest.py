@@ -1,36 +1,37 @@
 import boto3
 import os
 import unittest
-from moto import mock_dynamodb2
 from app import lambda_handler
+from moto import mock_dynamodb2
 
-def aws_setup():
-  # Mocked AWS Credentials for moto
-  os.environ['AWS_ACCESS_KEY_ID'] = 'testing'
-  os.environ['AWS_SECRET_ACCESS_KEY'] = 'testing'
-  os.environ['AWS_SECURITY_TOKEN'] = 'testing'
-  os.environ['AWS_SESSION_TOKEN'] = 'testing'
-  #os.environ['AWS_REGION_NAME'] = 'testing'
 
-  # Database table name into env variable
-  os.environ['databaseName'] = 'testing' 
+def aws_setup():  
+  #Mocked AWS Credentials for moto  
+  os.environ['AWS_ACCESS_KEY_ID'] = 'foobar'
+  os.environ['AWS_SECRET_ACCESS_KEY'] = 'foobar'
+  os.environ['AWS_SECURITY_TOKEN'] = 'foobar'
+  os.environ['AWS_SESSION_TOKEN'] = 'foobar' 
+  os.environ['AWS_DEFAULT_REGION'] = 'us-east-1'
+ 
+  # Database table name into env variable   
+os.environ['TABLE_NAME'] = 'table_name' 
 
 class TestLambdaDDB(unittest.TestCase): 
   @mock_dynamodb2
   def test_handler(self):
     # Create dynamodb boto3 object
-    dynamodb = boto3.client('dynamodb')
+    dynamo = boto3.client('dynamodb')
     # Get dynamodb table name from env
-    ddbTableName = os.environ['databaseName']
+    table_name = os.environ['TABLE_NAME']
     
     # Create mock table
-    dynamodb.create_table(
-      TableName = ddbTableName,
+    dynamo.create_table(
+      TableName = table_name,
       BillingMode='PAY_PER_REQUEST',
       AttributeDefinitions=[
           {
               'AttributeName': 'id',
-              'AttributeType': 'S'
+              'AttributeType': 'S' 
           },
       ],
       KeySchema=[
@@ -50,4 +51,4 @@ class TestLambdaDDB(unittest.TestCase):
 
 if __name__ == '__main__':
   aws_setup()
-  unittest.main()
+  unittest.main() 

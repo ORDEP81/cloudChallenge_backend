@@ -4,8 +4,8 @@ import os
 
 
 # create the client outside of the handler
-region_name = os.environ['REGION_NAME']
-dynamo = boto3.client('dynamodb', region_name=region_name)
+#region_name = os.environ['AWS_REGION']
+dynamo = boto3.client('dynamodb')
 table_name = os.environ['TABLE_NAME']
 
 def lambda_handler(event, context):
