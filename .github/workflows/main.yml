@@ -17,7 +17,7 @@ jobs:
         AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
         S3_BUCKET: ${{ secrets.S3_BUCKET }}
       with:
-        args: package --template-file template.yaml --s3-bucket ${{ secrets.S3_BUCKET }} --output-template-file packaged.yaml
+        args: package --s3-bucket ${{ secrets.S3_BUCKET }} --output-template-file packaged.yaml
     - name: Deploy
       uses: chriscoffee/sam-github-actions@master
       env:
