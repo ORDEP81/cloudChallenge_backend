@@ -10,12 +10,12 @@ def aws_setup():
   os.environ['AWS_SECRET_ACCESS_KEY'] = 'testing'
   os.environ['AWS_SECURITY_TOKEN'] = 'testing'
   os.environ['AWS_SESSION_TOKEN'] = 'testing'
-  os.environ['AWS_DEFAULT_REGION'] = 'us-east-1'
+  os.environ['AWS_REGION_NAME'] = 'testing'
 
   # Database table name into env variable
-  os.environ['databaseName'] = 'testing'
+  os.environ['databaseName'] = 'testing' 
 
-class TestLambdaDDB(unittest.TestCase):
+class TestLambdaDDB(unittest.TestCase): 
   @mock_dynamodb2
   def test_handler(self):
     # Create dynamodb boto3 object
@@ -42,7 +42,7 @@ class TestLambdaDDB(unittest.TestCase):
     )
 
     # Print Lambda response
-    LambdaResponse = handler(0, 0)
+    LambdaResponse = lambda_handler(0, 0)
     print("Lambda response: ", LambdaResponse)
 
     # Run unit test against Lambda status code
