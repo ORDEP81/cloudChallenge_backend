@@ -5,7 +5,7 @@ import os
 
 # create the client outside of the handler
 DEFAULT_REGION = "us-east-1"
-region_name = os.environ['AWS_REGION', DEFAULT_REGION]
+region_name = os.environ[DEFAULT_REGION]
 dynamo = boto3.client('dynamodb')
 table_name = os.environ['TABLE_NAME']
 
