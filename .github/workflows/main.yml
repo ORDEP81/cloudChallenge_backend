@@ -5,7 +5,7 @@ on:
 name: Publish SAM to AWS
 jobs:
   deploy:
-    name:  Package
+    name:  Package 
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@master
