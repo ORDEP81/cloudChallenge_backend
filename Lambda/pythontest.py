@@ -23,7 +23,7 @@ class testDynamo(unittest.TestCase):
       TableName = table_name,
       BillingMode='PAY_PER_REQUEST',
       AttributeDefinitions=[
-          {
+          {   
               'AttributeName': 'id',
               'AttributeType': 'S' 
           },
@@ -44,3 +44,4 @@ class testDynamo(unittest.TestCase):
 if __name__ == '__main__':
   testCreds()
   unittest.main() 
+  
