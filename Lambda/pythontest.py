@@ -17,7 +17,7 @@ def testCreds():
 class testDynamo(unittest.TestCase): 
   @mock_dynamodb2
   def test_handler(self):
-    dynamo = boto3.client('dynamodb')
+    dynamo = boto3.client('dynamodb', region_name='us-east-1')
     table_name = os.environ['TABLE_NAME']
     dynamo.create_table(
       TableName = table_name,
