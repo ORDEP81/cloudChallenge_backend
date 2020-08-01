@@ -8,7 +8,7 @@ DEFAULT_REGION = "us-east-1"
 region_name = os.environ.get("AWS_REGION", DEFAULT_REGION)
 
 def lambda_handler(event, context):
-    dynamo = boto3.resource('dynamodb', region_name='us-east-1')
+    dynamo = boto3.client('dynamodb', region_name='us-east-1')
     table_name = os.environ['TABLE_NAME']
     
     response = dynamo.update_item(
