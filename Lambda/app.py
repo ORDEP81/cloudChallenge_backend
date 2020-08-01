@@ -29,11 +29,10 @@ def lambda_handler(event, context):
         'statusCode': 200,
         'body' : dbresponse,
         'headers': {
-          "Content-Type" : "application/json",
-          "Access-Control-Allow-Origin" : "",
-          "Allow" : "GET, OPTIONS, POST",
-          "Access-Control-Allow-Methods" : "GET, OPTIONS, POST",
-          "Access-Control-Allow-Headers" : ""
+            "Content-Type" : "application/json",
+            "Access-Control-Allow-Headers" : "Content-Type,X-Amz-Date,Authorization,X-Api-Key,x-requested-with",
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Methods": "GET,OPTIONS" 
         },
     }
     return corsresponse    
