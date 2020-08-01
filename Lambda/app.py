@@ -4,12 +4,14 @@ import os
 
 
 # create the client outside of the handler
-DEFAULT_REGION = "us-east-1"
-region_name = os.environ.get("AWS_REGION", DEFAULT_REGION)
-dynamo = boto3.client('dynamodb', region_name)
-table_name = os.environ['TABLE_NAME']
+
 
 def lambda_handler(event, context):
+    DEFAULT_REGION = "us-east-1"
+    region_name = os.environ.get("AWS_REGION", DEFAULT_REGION)
+    dynamo = boto3.resource('dynamodb', region_name)
+    table_name = os.environ['TABLE_NAME']
+    
     response = dynamo.update_item(
         TableName= table_name,
         Key = {
