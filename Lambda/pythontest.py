@@ -1,12 +1,10 @@
-import boto3
 import os
+import boto3
 import unittest
-from app import lambda_handler
 from moto import mock_dynamodb2
+from app import lambda_handler
 
-
-def aws_setup():  
-  #Mocked AWS Credentials for moto
+def testCreds():  
   DEFAULT_REGION = "us-east-1"  
   os.environ['AWS_ACCESS_KEY_ID'] = 'foobar'
   os.environ['AWS_SECRET_ACCESS_KEY'] = 'foobar'
@@ -14,18 +12,13 @@ def aws_setup():
   os.environ['AWS_SESSION_TOKEN'] = 'foobar' 
   os.environ.get("AWS_REGION", DEFAULT_REGION)
  
-  # Database table name into env variable   
-os.environ['TABLE_NAME'] = 'table_name' 
+  os.environ['TABLE_NAME'] = 'table_name' 
 
-class TestLambdaDDB(unittest.TestCase): 
+class testDynamo(unittest.TestCase): 
   @mock_dynamodb2
   def test_handler(self):
-    # Create dynamodb boto3 object
     dynamo = boto3.client('dynamodb')
-    # Get dynamodb table name from env
     table_name = os.environ['TABLE_NAME']
-    
-    # Create mock table
     dynamo.create_table(
       TableName = table_name,
       BillingMode='PAY_PER_REQUEST',
@@ -43,13 +36,11 @@ class TestLambdaDDB(unittest.TestCase):
       ]
     )
 
-    # Print Lambda response
-    LambdaResponse = lambda_handler(0, 0)
-    print("Lambda response: ", LambdaResponse)
+    response = lambda_handler(0, 0)
+    print("Response: ", response)
 
-    # Run unit test against Lambda status code
-    self.assertEqual(200, LambdaResponse['statusCode'])
+    self.assertEqual(200, response['statusCode'])
 
 if __name__ == '__main__':
-  aws_setup()
+  testCreds()
   unittest.main() 
