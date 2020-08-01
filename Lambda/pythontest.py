@@ -6,12 +6,13 @@ from moto import mock_dynamodb2
 
 
 def aws_setup():  
-  #Mocked AWS Credentials for moto  
+  #Mocked AWS Credentials for moto
+  DEFAULT_REGION = "us-east-1"  
   os.environ['AWS_ACCESS_KEY_ID'] = 'foobar'
   os.environ['AWS_SECRET_ACCESS_KEY'] = 'foobar'
   os.environ['AWS_SECURITY_TOKEN'] = 'foobar'
   os.environ['AWS_SESSION_TOKEN'] = 'foobar' 
-  os.environ['AWS_DEFAULT_REGION'] = 'us-east-1'
+  os.environ.get("AWS_REGION", DEFAULT_REGION)
  
   # Database table name into env variable   
 os.environ['TABLE_NAME'] = 'table_name' 
