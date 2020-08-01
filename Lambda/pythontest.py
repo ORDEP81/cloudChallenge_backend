@@ -10,7 +10,7 @@ def testCreds():
   os.environ['AWS_SECRET_ACCESS_KEY'] = 'foobar'
   os.environ['AWS_SECURITY_TOKEN'] = 'foobar'
   os.environ['AWS_SESSION_TOKEN'] = 'foobar' 
-  os.environ.get("AWS_REGION", DEFAULT_REGION)
+  
  
   os.environ['TABLE_NAME'] = 'table_name' 
 
@@ -44,4 +44,3 @@ class testDynamo(unittest.TestCase):
 if __name__ == '__main__':
   testCreds()
   unittest.main() 
-  
